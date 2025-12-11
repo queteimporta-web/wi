@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>19 Días Para Tu Cumple Mi Amor: La Cuenta Regresiva</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        // Colores de Cumpleaños: Azul Zafiro, Dorado y Crema
+                        sapphireBlue: '#1a237e', 
+                        accentGold: '#D4AF37',   
+                        cream: '#FDFBF7',
+                        deepBlue: '#0d114c',
+                        softGray: '#a0aec0'
+                    },
+                    fontFamily: {
+                        script: ['Great Vibes', 'cursive'],
+                        body: ['Nunito', 'sans-serif'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'wiggle': 'wiggle 0.5s ease-in-out',
+                        'sparkle': 'sparkle 1s ease-in-out infinite alternate',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        wiggle: {
+                            '0%, 100%': { transform: 'rotate(-3deg)' },
+                            '50%': { transform: 'rotate(3deg)' },
+                        },
+                        sparkle: {
+                            '0%': { opacity: 0.5, transform: 'scale(1)' },
+                            '100%': { opacity: 1, transform: 'scale(1.2)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            /* Fondo Azul Zafiro con gradiente */
+            background-color: #0d114c;
+            background-image: radial-gradient(#1a237e, #0d114c);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .card-inner {
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        .perspective {
+            perspective: 1000px;
+        }
+
+        /* Estilo para simular estrellas/chispas en el fondo */
+        .sparkle-decoration {
+            position: fixed;
+            width: 5px;
+            height: 5px;
+            background-color: #FFD700;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: sparkle 2s ease-in-out infinite alternate;
+            box-shadow: 0 0 5px #FFD700, 0 0 10px #D4AF37;
+            z-index: 0;
+        }
+        
+        /* Posiciones aleatorias para las chispas */
+        .sparkle-decoration:nth-child(1) { top: 10%; left: 5%; animation-delay: 0.1s; }
+        .sparkle-decoration:nth-child(2) { top: 80%; left: 15%; animation-delay: 0.5s; }
+        .sparkle-decoration:nth-child(3) { top: 30%; left: 40%; animation-delay: 1.2s; }
+        .sparkle-decoration:nth-child(4) { top: 50%; left: 70%; animation-delay: 0.8s; }
+        .sparkle-decoration:nth-child(5) { top: 20%; left: 85%; animation-delay: 1.5s; }
+        .sparkle-decoration:nth-child(6) { top: 60%; left: 25%; animation-delay: 0.3s; }
+        .sparkle-decoration:nth-child(7) { top: 90%; left: 65%; animation-delay: 1.0s; }
+        .sparkle-decoration:nth-child(8) { top: 40%; left: 5%; animation-delay: 0.7s; }
+
+    </style>
+</head>
+<body class="font-body text-gray-800">
+
+    <!-- Decoración de Chispas/Estrellas -->
+    <div class="sparkle-decoration"></div>
+    <div class="sparkle-decoration"></div>
+    <div class="sparkle-decoration"></div>
+    <div class="sparkle-decoration"></div>
+    <div class="sparkle-decoration"></div>
+    <div class="sparkle-decoration"></div>
+    <div class="sparkle-decoration"></div>
+    <div class="sparkle-decoration"></div>
+
+    <!-- Contenedor Principal -->
+    <div class="relative z-10 max-w-6xl mx-auto px-4 py-10 flex flex-col items-center">
+        
+        <!-- Título -->
+        <header class="text-center mb-10 animate-float">
+            <h1 class="font-script text-6xl md:text-8xl text-accentGold drop-shadow-lg mb-2">19 Días Para Tu Cumple Mi Amor</h1>
+            <p class="text-cream text-lg md:text-xl font-light tracking-wider">La Cuenta Regresiva, Mi Vida ❤️</p>
+        </header>
+
+        <!-- Grid del Calendario -->
+        <div id="calendar-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 w-full">
+            <!-- Las tarjetas se generan con JS -->
+        </div>
+
+    </div>
+
+    <!-- Modal para leer la carta -->
+    <div id="letter-modal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm transition-opacity duration-300 opacity-0">
+        <div class="bg-cream max-w-lg w-full rounded-lg shadow-2xl p-8 relative transform scale-90 transition-transform duration-300" id="modal-content">
+            <!-- Decoración de sobre -->
+            <div class="absolute -top-6 left-1/2 transform -translate-x-1/2 bg-sapphireBlue text-white w-12 h-12 flex items-center justify-center rounded-full shadow-lg border-4 border-cream">
+                🎁
+            </div>
+            
+            <h2 id="modal-date" class="text-3xl font-script text-sapphireBlue mb-4 text-center mt-2">Día X</h2>
+            
+            <div class="prose text-gray-700 max-h-[60vh] overflow-y-auto custom-scrollbar p-2 text-center font-medium leading-relaxed" id="modal-text">
+                <!-- Texto de la carta -->
+            </div>
+
+            <button onclick="closeModal()" class="mt-6 w-full bg-sapphireBlue hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-full transition shadow-md">
+                Guardar recuerdo 💌
+            </button>
+        </div>
+    </div>
+
+    <!-- Toast de "Error" (Jajaja ni lo intentes) -->
+    <div id="error-toast" class="fixed bottom-10 left-1/2 transform -translate-x-1/2 bg-white text-sapphireBlue px-6 py-4 rounded-full shadow-2xl z-50 hidden flex items-center gap-3 border-2 border-sapphireBlue animate-wiggle">
+        <span class="text-2xl">🐶</span>
+        <span class="font-bold text-lg">Jajajaja ¡ni lo intentes, mi precioso! 😚💗</span>
+    </div>
+
+    <script>
+        // --- CONFIGURACIÓN DE TUS CARTAS ---
+        // ¡EDITA ESTOS MENSAJES PARA TU NOVIO!
+        // Día 19 es el DÍA DE SU CUMPLEAÑOS.
+        const letters = {
+            1: "¡Hola, mi amor! ❤️ Hoy empezamos la cuenta regresiva para celebrarte. Eres mi sol en días nublados. Te amooooooooo ❤️‍🩹.",
+            2: "Día 2: Me encanta la forma en que ves el mundo. Tu perspectiva, llena de curiosidad y bondad, es mi lugar favorito. Gracias por inspirarme.",
+            3: "Día 3: ¿Sabes qué admiro de ti🥺❤️? Tu (fuerza/paciencia/creatividad). Eres increíblemente talentoso y me siento muy orgullosa de ser tu novia 😭❤️‍🩹🫂💕.",
+            4: "Día 4: Hoy me acuerdo de nuestra primera cita, y de cómo supe, justo en ese momento, que la vida contigo sería una aventura maravillosa. Nunca me equivoqué 🥺💗.",
+            5: "Día 5: Eres mi persona favorita para acurrucarme 🫂. Tu abrazo es mi refugio seguro 🥺💗. Espero que hoy sientas todo el calor de mi amor 🥺💕.",
+            6: "Día 6: Cada risa, cada broma interna, cada tontería que compartimos es un tesoro. ¡Adoro nuestro amor y cada momento a tu lado! Te amoooooooooooo❤️‍🩹.",
+            7: "Día 7: ¡Una semana menos 🥺! No puedo esperar a pasar tu cumpleaños y muchos más a tu lado. Prometo hacer de cada uno el mejor 🤗.",
+            8: "Día 8: Mi amor por ti es inmenso, profundo e incondicional. Espero que tengas un día lleno de paz y alegría 🥰🥰🥰🥰.",
+            9: "Día 9: Tu bondad hacia los demás me conmueve 🥺. Tienes el corazón más grande que he conocido, y por eso, te amo más cada día mi vida 😭❤️‍🩹❤️‍🩹❤️‍🩹.",
+            10: "Día 10: Eres mi mejor amigo. La persona con la que puedo hablar de todo y de nada, y sentirme completa. Gracias por ser mi confidente 🫂💕.",
+            11: "Día 11: Solo con verte, mi día mejora. Tienes esa luz que me ilumina. No olvides nunca lo valioso que eres 🥺❤️.",
+            12: "Día 12: ¡Ya falta muy poco! Me encanta planear sorpresas para ti. Eres mi panquecito. 😉",
+            13: "Día 13: Me fascinan tus metas y tus sueños. Estoy aquí para ser tu porrista número uno, siempre. A volar alto, mi vida tu puedes mas de lo que piensas y yo creo en ti🥺💕.",
+            14: "Día 14: Eres el hombre más guapo del universo (y de mi vida). No solo por fuera, sino por la belleza de tu alma. Te amo demasiado 🥰💗.",
+            15: "Día 15: Solo 4 días... ¡Qué emoción! Por ahora, disfruto estos últimos momentos de anticipación contigo. Eres mi felicidad pechocho 😭💗.",
+            16: "Día 16: Eres la prueba de que el amor de verdad existe. Me has enseñado tanto, y me has hecho una mejor persona. Gracias por ser la personita que alegra mis dias no sabes cuanto te amo my love <3.",
+            17: "Día 17: Tu voz, tu mirada, la forma en que me tomas la mano... son pequeños detalles que guardo en mi corazón. Eres perfecto para mí 🥰.",
+            18: "Día 18: ¡Mañana es el gran día! Duerme bien, mi amor. Te espera un día lleno de cariño y celebración. Te adoro, siempre 🥺.",
+            // FIX: Se cambió a un template literal (` `) y se usaron <br> para los saltos de línea para evitar el SyntaxError.
+            19: `Día 19: ¡FELIZ CUMPLEAÑOS! 🎂✨ Mi amor,<br><br>Hoy es el día en que el mundo recibió a la persona que llenó el mío de luz 🥺💕, risas y todo lo bueno que existe. Feliz cumpleaños, mi vida 🫂💝.<br><br>No puedo evitar recordar el primer día que te vi — nunca imaginé que ese chico con esa sonrisa tan especial se convertiría en el centro de todos mis sueños. Cada año que pasa a tu lado es un regalo: te he visto crecer, luchar, sonreír y cuidarme como nadie lo ha hecho 🥺. Eres tan fuerte, tan amable ☺️ y tan perfecto para mí 🥰, a pesar de tus pequeños defectos que yo adoro 🥺💕.<br><br>Hoy quiero desearte todo lo que tu corazón desee🥹 — sueños que se hagan realidad y un futuro lleno de la misma felicidad que nos das el uno al otro 🫂. Y quiero recordarte que, en cada cumpleaños que venga, estaré aquí para cantarte feliz cumpleaños a todo pulmón 🥹💗, prepararte tu comida favorita y mirarte con la misma locura que hoy.. Te amo con todo mi ser 💗. Con amor infinito, Tu esposita ❤️`,
+        };
+
+        // --- LÓGICA DEL CALENDARIO ---
+
+        const grid = document.getElementById('calendar-grid');
+        const modal = document.getElementById('letter-modal');
+        const modalContent = document.getElementById('modal-content');
+        const modalDate = document.getElementById('modal-date');
+        const modalText = document.getElementById('modal-text');
+        const toast = document.getElementById('error-toast');
+        let toastTimeout;
+
+        // Obtener fecha y hora actual
+        const today = new Date();
+        // NOTA: Se asume que la cuenta regresiva termina en Diciembre (mes 11)
+        const CUMPLE_MONTH = 11;
+        const NUM_CARDS = 19;
+
+        // Generar 19 días
+        for (let i = 1; i <= NUM_CARDS; i++) {
+            const card = document.createElement('div');
+            card.className = `
+                perspective cursor-pointer group h-32 md:h-40
+            `;
+            
+            // Lógica para el 12:01 AM:
+            // Crea un objeto de fecha y hora para las 12:01 AM del día 'i' de diciembre
+            const targetDate = new Date(today.getFullYear(), CUMPLE_MONTH, i, 0, 1); 
+            
+            // La carta se puede abrir si la hora actual es posterior o igual a la hora objetivo (00:01 AM)
+            const isOpenable = today.getTime() >= targetDate.getTime(); 
+            
+            // Si el mes actual no es Diciembre, solo el día 1 se abre por ahora (para empezar el conteo)
+            if (today.getMonth() !== CUMPLE_MONTH && i > 1) {
+                // Bloqueamos las cartas futuras si no estamos en diciembre, excepto el día 1
+                // NOTA: La lógica anterior ya considera el mes (11 es diciembre). Si hoy.getMonth() es distinto de 11, 
+                // esto debería bloquear las tarjetas. Dejaremos la lógica original ya que la fecha se usa
+                // de forma absoluta (día 1, 2, 3... del mes de diciembre).
+                // La verificación ya usa targetDate (que usa CUMPLE_MONTH=11), así que no se necesita este if extra.
+            }
+
+            // Contenido de la tarjeta
+            card.innerHTML = `
+                <div class="card-inner relative w-full h-full text-center transition-transform duration-500 transform group-hover:scale-105 shadow-xl rounded-xl">
+                    <!-- Frente de la tarjeta -->
+                    <div class="absolute inset-0 bg-cream rounded-xl flex flex-col items-center justify-center border-2 border-accentGold backface-hidden">
+                        <span class="text-4xl md:text-5xl font-script ${isOpenable ? 'text-sapphireBlue' : 'text-softGray'} font-bold">${i}</span>
+                        ${isOpenable ? '<span class="text-indigo-600 text-xs mt-2 font-bold uppercase tracking-widest">Abrir</span>' : '<span class="text-softGray text-xs mt-2">🔒</span>'}
+                    </div>
+                </div>
+            `;
+
+            // Evento de Click
+            card.addEventListener('click', () => {
+                if (isOpenable) {
+                    openLetter(i);
+                } else {
+                    showError();
+                }
+            });
+
+            grid.appendChild(card);
+        }
+
+        function openLetter(day) {
+            const message = letters[day] || "Escribe un mensaje para este día en el código :)";
+            
+            let dateText = `Día ${day} de Amor`;
+            if (day === 19) {
+                dateText = "¡El Gran Día de Cumpleaños!";
+            }
+            modalDate.innerText = dateText;
+            modalText.innerHTML = message;
+            
+            modal.classList.remove('hidden');
+            // Pequeño timeout para la animación de opacidad
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                modalContent.classList.remove('scale-90');
+                modalContent.classList.add('scale-100');
+            }, 10);
+        }
+
+        function closeModal() {
+            modal.classList.add('opacity-0');
+            modalContent.classList.remove('scale-100');
+            modalContent.classList.add('scale-90');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        function showError() {
+            // Mostrar el Toast
+            toast.classList.remove('hidden');
+            
+            // Reiniciar animación si se pulsa muchas veces
+            toast.classList.remove('animate-wiggle');
+            void toast.offsetWidth; // trigger reflow
+            toast.classList.add('animate-wiggle');
+
+            // Ocultar después de 3 segundos
+            if (toastTimeout) clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 3000);
+        }
+
+        // Cerrar modal al hacer click fuera
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+
+    </script>
+</body>
+</html>
